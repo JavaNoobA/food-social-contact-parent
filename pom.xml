@@ -12,6 +12,7 @@
         <module>ms-register</module>
         <module>ms-gateway</module>
         <module>ms-diners</module>
+        <module>commons</module>
     </modules>
 
     <properties>
