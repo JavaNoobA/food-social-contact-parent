@@ -47,10 +47,9 @@ public class SignInIdentity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (StrUtil.isNotBlank(this.roles)) {
             // 获取数据库中的角色信息
-            Lists.newArrayList();
-            this.authorities = Stream.of(this.roles.split(",")).map(role -> {
-                return new SimpleGrantedAuthority(role);
-            }).collect(Collectors.toList());
+            this.authorities = Stream.of(this.roles.split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
         } else {
             // 如果角色为空则设置为 ROLE_USER
             this.authorities = AuthorityUtils
@@ -81,7 +80,7 @@ public class SignInIdentity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.isValid == 0 ? false : true;
+        return this.isValid != 0;
     }
 
 }
