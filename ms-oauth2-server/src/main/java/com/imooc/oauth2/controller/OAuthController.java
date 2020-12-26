@@ -30,7 +30,7 @@ public class OAuthController {
     @Resource
     private HttpServletRequest request;
 
-    @PostMapping("token")
+    @PostMapping("/token")
     public ResultInfo postAccessToken(Principal principal, @RequestParam Map<String, String> parameters)
             throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());

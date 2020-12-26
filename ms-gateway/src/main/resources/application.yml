@@ -14,7 +14,16 @@ spring:
         - id: ms-diners
           uri: lb://ms-diners
           predicates:
-            - Path=/hello/**
+            - Path=/diners/**
+          filters:
+            - StripPrefix=1
+
+        - id: ms-oauth2-server
+          uri: lb://ms-oauth2-server
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
 
 # 配置 Eureka Server 注册中心
 eureka:
@@ -24,3 +33,18 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8080/eureka/
+
+secure:
+  ignore:
+    urls: # 配置白名单路径
+      - /actuator/**
+      - /auth/oauth/**
+      - /diners/signin
+      - /diners/send
+      - /diners/checkPhone
+      - /diners/register
+      - /seckill/add
+
+logging:
+  pattern:
+    console: '%d{HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n'
